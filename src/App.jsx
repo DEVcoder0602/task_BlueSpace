@@ -107,6 +107,27 @@ function App() {
             </div>
           </div>
         </div>
+
+        <div
+          style={{
+            position: "absolute",
+            top: "300vh",
+            width: "100%",
+            height: "100%",
+            // background: "red",
+          }}
+        >
+          <div className="image-overlay" style={{ height: "100%" }}>
+            <div
+              className="text-overlay"
+              style={{ top: "44%", left: "4%", textAlign: "start" }}
+            >
+              <span style={{ color: "#0052CC" }}>Brand Identity </span>
+              <span style={{ color: "white", fontWeight: 200 }}>made easy</span>
+            </div>
+            <div className="square-overlay square-overlay4"></div>
+          </div>
+        </div>
       </div>
     </>
   );
