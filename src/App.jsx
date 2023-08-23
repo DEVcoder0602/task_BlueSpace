@@ -2,6 +2,7 @@ import "./App.css";
 import HomeContent from "./components/content/HomeContent";
 import TopBar from "./components/navbar/TopBar";
 import { useState, useEffect } from "react";
+import { motion, useAnimation } from "framer-motion";
 
 function App() {
   // const [scrollPercentage, setScrollPercentage] = useState(0);
@@ -35,8 +36,31 @@ function App() {
     };
   }, []);
 
-  const rotateAngle = scrollY * 0.5 + 270;
-  const scaleFactor = 1 - scrollY * 0.002;
+  // const rotateAngle = scrollY * 0.5 + 270;
+  // const scaleFactor = 1 - scrollY * 0.002;
+
+  const cloudControls = useAnimation();
+
+  useEffect(() => {
+    // Calculate the opacity based on scroll position
+    const opacity = 1 - scrollY * 0.05;
+    // Animate the cloud opacity
+    cloudControls.start({ opacity });
+  }, [cloudControls]);
+
+  const squareControls = useAnimation();
+
+  useEffect(() => {
+    // Calculate the position based on scroll position
+    const translateY = scrollY;
+    // Animate the square position
+    squareControls.start({
+      y: -translateY,
+      x: -translateY * 0.5,
+      scale: 1 - scrollY * 0.001,
+      rotate: 270 - scrollY * 0.5,
+    });
+  }, [scrollY, squareControls]);
 
   return (
     <>
@@ -44,26 +68,29 @@ function App() {
         <TopBar />
         {/* <HomeContent /> */}
         <div className="image-overlay">
-          <div
+          <motion.div
             className="square-overlay"
+            animate={squareControls}
             // style={{
             //   transform: `rotate(90deg) translateX(${
             //     scrollPercentage >= 100 ? "-50vw" : "0"
             //   }) translateY(${scrollPercentage >= 100 ? "-50vh" : "0"})`,
             //   transition: "transform 0.5s ease",
             // }}
-            style={{
-              transform: `rotate(-${rotateAngle}deg) scale(${scaleFactor})`,
-              transition: "transform 0.3s ease",
-              top: `-${scrollY * 2}px`,
-              left: `-${scrollY}px`,
-            }}
+            // style={{
+            //   transform: `rotate(-${rotateAngle}deg) scale(${scaleFactor})`,
+            //   transition: "transform 0.3s ease",
+            //   top: `-${scrollY * 2}px`,
+            //   left: `-${scrollY}px`,
+            // }}
           >
-            <div
+            <motion.div
               className="cloud-overlay"
-              // style={{ opacity: `${scrollY * 0.001}` }}
-            ></div>
-          </div>
+              initial={{ opacity: 1 }}
+              // animate={cloudControls}
+              style={{ opacity: `${scrollY * 0.1}` }}
+            ></motion.div>
+          </motion.div>
           <div className="text-overlay" style={{ top: "20%", width: "36%" }}>
             <span style={{ color: "white", fontWeight: 200 }}>
               Connecting your{" "}
@@ -81,7 +108,6 @@ function App() {
           }}
         >
           <div className="image-overlay">
-            <div className="square-overlay square-overlay2"></div>
             <div className="text-overlay">
               <span style={{ color: "white", fontWeight: 200 }}>
                 Key to your{" "}
@@ -100,7 +126,6 @@ function App() {
           }}
         >
           <div className="image-overlay" style={{ height: "100%" }}>
-            <div className="square-overlay square-overlay3"></div>
             <div className="text-overlay" style={{ top: "44%" }}>
               <span style={{ color: "#0052CC" }}>Brand Identity </span>
               <span style={{ color: "white", fontWeight: 200 }}>made easy</span>
@@ -125,7 +150,6 @@ function App() {
               <span style={{ color: "#0052CC" }}>Brand Identity </span>
               <span style={{ color: "white", fontWeight: 200 }}>made easy</span>
             </div>
-            <div className="square-overlay square-overlay4"></div>
           </div>
         </div>
       </div>
